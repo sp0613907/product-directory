@@ -16,6 +16,10 @@
     $category_name = $category['name'];
     $statement->closeCursor();
 
+    // $category = getOne('SELECT * FROM categories WHERE id = :category_id',
+    //                     [':category_id', $category_id],
+    //                     $db);
+
     //categories
     $query = 'SELECT * FROM categories ORDER BY id';
     $statement = $db->prepare($query);
@@ -32,10 +36,6 @@
     $products = $statement->fetchAll();
     $statement->closeCursor();
 
-
-    // $category = getOne('SELECT * FROM categories WHERE id = :category_id',
-    //                     [':category_id', $category_id],
-    //                     $db);
     // $categories = getOne('SELECT * FROM categories ORDER BY id',
     //                      [], $db);
     // $products = getOne('SELECT * FROM products WHERE category_id = :category_id ORDER BY id',
@@ -51,6 +51,7 @@
     </head>
 
     <body>
+    <div class="container">
         <h1>Product List</h1>
         <div>
             <h2>Categories</h2>
@@ -68,8 +69,24 @@
         </div>
 
         <div>
+            <h2><?php echo $category_name?></h2>
+            <table>
+                <tr>
+                    <th>Head</th>
+                    <th>Name</th>
+                    <th>Price</th>
+                </tr>
 
+                <?php foreach($products as $product) : ?>
+                <tr>
+                    <td><?php echo $product['code']; ?></td>
+                    <td><?php echo $product['name']; ?></td>
+                    <td><?php echo "$".number_format($product['price'], 2); ?></td>
+                </tr>
+                <?php endforeach; ?>
+            </table>
         </div>
+    </div>
     </body>
 
 </html>
